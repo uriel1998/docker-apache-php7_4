@@ -1,7 +1,12 @@
 Apache 2.0 License
 
 Dockerfile to bring up apache listening on port 8180
+Using php7.4 because I have several webapps that simply aren't updated for php8
 Meant to be used behind a reverse proxy.
 Serves up sites configured in ./apache-sites (only updates on launch)
 Site root available in ./www
 Stores logs in ./logs
+
+use run.sh and build.sh for standalone docker.
+otherwise use docker-compose up
+uses debian buster-slim as a base
