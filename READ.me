@@ -10,3 +10,9 @@ Stores logs in ./logs
 use run.sh and build.sh for standalone docker.
 otherwise use docker-compose up
 uses debian buster-slim as a base
+
+If you're connecting to an existing database on the host, make sure the 
+*DATABASE* permissions allow for the user to not be on "localhost". 
+
+Add additional mounts (e.g. for a music directory, and so on) to docker-compose.yaml
+as needed.

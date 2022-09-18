@@ -25,8 +25,8 @@ if [ ! -f /etc/php/7.4/myinit ];then
 fi
 # RUN echo "<?php phpinfo(); ?>" > /app/rompr/phpinfo.php
 update-rc.d php7.4-fpm defaults
-a2enmod proxy_fcgi setenvif
-a2enconf php7.4-fpm
+a2enmod proxy_fcgi setenvif alias autoindex deflate dir mime mime_magic rewrite xml2enc
+a2enconf php7.4-fpm alias deflate dir mime mime_magic 
 
 /etc/init.d/php7.4-fpm restart
 # /usr/sbin/apachectl start
