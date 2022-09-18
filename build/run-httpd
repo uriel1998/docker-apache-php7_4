@@ -26,7 +26,7 @@ fi
 # RUN echo "<?php phpinfo(); ?>" > /app/rompr/phpinfo.php
 update-rc.d php7.4-fpm defaults
 a2enmod proxy_fcgi setenvif alias autoindex deflate dir mime mime_magic rewrite xml2enc
-a2enconf php7.4-fpm alias deflate dir mime mime_magic 
+a2enconf php7.4-fpm
 
 /etc/init.d/php7.4-fpm restart
 # /usr/sbin/apachectl start
