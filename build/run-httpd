@@ -25,8 +25,32 @@ if [ ! -f /etc/php/7.4/myinit ];then
 fi
 # RUN echo "<?php phpinfo(); ?>" > /app/rompr/phpinfo.php
 update-rc.d php7.4-fpm defaults
-a2enmod proxy_fcgi setenvif alias autoindex deflate dir mime mime_magic rewrite xml2enc
-a2enconf php7.4-fpm
+a2enmod proxy_fcgi && \
+a2enmod setenvif && \
+a2enmod alias && \
+a2enmod autoindex && \
+a2enmod deflate && \
+a2enmod dir && \
+a2enmod mime && \
+a2enmod mime_magic && \
+a2enmod rewrite && \
+a2enmod xml2enc && \
+a2enmod actions && \
+a2enmod auth_basic && \
+a2enmod cgi && \
+a2enmod expires && \
+a2enmod headers && \
+a2enmod proxy && \
+a2enmod proxy_html && \
+a2enmod proxy_http && \
+a2enmod proxy_scgi && \
+a2enmod proxy_wstunnel 
+
+a2enconf php7.4-fpm && \
+a2enconf charset && \
+a2enconf javascript-common && \
+a2enconf security && \
+a2enconf serve-cgi-bin 
 
 /etc/init.d/php7.4-fpm restart
 # /usr/sbin/apachectl start
