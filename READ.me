@@ -1,58 +1,32 @@
 Apache 2.0 License
 
 Dockerfile to bring up apache listening on port 8180
+
 Using php7.4 because I have several webapps that simply aren't updated for php8
 Meant to be used behind a reverse proxy.
+
 Serves up sites configured in ./apache-sites (only updates on launch)
+
 Site root available in ./www
-Stores logs in ./logs
 
 use run.sh and build.sh for standalone docker.
 otherwise use docker-compose up
 uses debian buster-slim as a base
 
-If you're connecting to an existing database on the host, make sure the 
-*DATABASE* permissions allow for the user to not be on "localhost". 
+# mysql notes
 
-make sure your firewall allows from the docker IP ranges as well (usually 172.*.*.*/16) . And your user is 
-'username'@'%'
+* Firewall - make sure your firewall allows from the docker IP ranges as well (usually 172.*.*.*/16). Easiest is to have a router firewall, and inside your LAN have  `sudo ufw allow in to any port 3306`
 
-Add additional mounts (e.g. for a music directory, and so on) to docker-compose.yaml
-as needed.
+* If you're connecting to an existing database on the host, make sure the 
+*DATABASE* permissions allow for the user to not be on "localhost". e.g. 
+```
+CREATE USER 'myuser'@'%' IDENTIFIED BY 'mycomplicatedpassword';
+GRANT ALL PRIVILEGES ON mydb.* TO 'myuser'@'%';
+```
 
-Note that you will probably have to change permissions on the served directories
-(or at least some of them) to www-data:www-data
-You may wish to also chmod to 6777 to preserve GID/UID of files written there.
-chmod g+s ./ 
-
-
-Default serves up http on port 8180 via an exposed port
-
-find UID of your www-data (or appropriate webserver) and substitute like so:
-
-id www-data
-result: 
-uid=33(www-data) gid=33(www-data) ... 
-
-then use that information 
-
-UID=${UID} GID=${GID} docker-compose up
-
-
-# host mode networking
-
-- if you need to hit a database on the host, the easiest way is to rename 
-docker-compose-host-networking.yaml to docker-compose.yaml
-That will use the alternate dockerfile to copy in a different apache2.conf and ports.conf 
-which redefine the base port so you don't have a conflict.
-- You will need to change your sites to use the port number of your choice (I use 8180,
-since *everyone* uses 8080) to avoid port conflicts. 
-
-
-
-
-Note that you may have to change mysql bind addresses as well:
+* Mysql server bind addresses:  Note that you may have to change mysql bind addresses as well:
 https://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access#37341046
+ 
  Follow instructions (steps 1 to 3 don't needed in windows):
 
     Find mysql config to edit:
@@ -64,3 +38,18 @@ https://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access
     Find bind-address=127.0.0.1 in config file change bind-address=0.0.0.0 (you can set bind address to one of your interface ips or like me use 0.0.0.0)
 
     Restart mysql service run on console: service restart mysql 
+
+# Further notes: 
+
+* Add additional mounts (e.g. for a music directory, and so on) to docker-compose.yaml
+as needed.
+
+* Note that you will probably have to change ownership on the served directories
+(or at least some of them) to www-data:www-data (or 33:33), which is the UID/GID for 
+apache on debian
+
+* You may wish to also chmod to 6777 to preserve GID/UID of files written there.
+chmod g+s ./ 
+
+
+
