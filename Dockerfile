@@ -52,22 +52,3 @@ RUN chmod 755 /usr/local/bin/run-httpd
 
 EXPOSE 80
 CMD ["/usr/local/bin/run-httpd"]
-
-# THIS LOOKS INTRIGUING
-# https://github.com/julianbrowne/apache-anywhere
-
-# build with 
-# docker build -t apache2_php7_4 .
-# run with
-# docker run -d apache2_php7_4
-# docker ps
-# docker kill 8defbf68cc79
-# docker run -it apache2_php7_4 /bin/bash
-# will pull in various config files, then at runtime for dyn conversion
-# in fact, maybe have a startpoint to check for those and recreate them out
-# of the container a la like what roundcube did.
-# docker apache2_php7_4 -d 
-# -it 
-# --name container 
-# --mount type=bind,source=/apache_config,target=/etc/apache2
-# --mount type=bind,source=/www,target=/etc/www
