@@ -130,4 +130,4 @@ GRANT ALL PRIVILEGES ON mydb.* TO 'myuser'@'%';
 ```
 
 * Note that you may have to change the addresses that MySQL will bind to as well, 
-following these instructions from [StackOverflow](https://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access#37341046):
+following these instructions from [StackOverflow](https://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access#37341046).
